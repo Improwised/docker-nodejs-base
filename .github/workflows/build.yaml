@@ -2,6 +2,10 @@ name: Build and Push
 on:
   push:
 
+env:
+  NODE_VERSION: "20.10.0"
+  ALPINE_VERSION: "3.18"
+
 jobs:
   build:
     name: Build and Push Image
@@ -31,6 +35,9 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
+          build-args: |
+            NODE_VERSION=${{ env.NODE_VERSION }}
+            ALPINE_VERSION=${{ env.ALPINE_VERSION }}
           context: .
           push: ${{ github.ref_name == 'main' }}
           tags: "improwised/docker-nodejs-base:${{ steps.tag.outputs.tag }}"
