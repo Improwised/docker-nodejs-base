@@ -1,6 +1,5 @@
-# Default version for NodeJS and Alpine Linux
-FROM node:${NODE_VERSION}-alpine AS node
-FROM alpine:${ALPINE_VERSION}
+FROM node:20.10.0-alpine AS node
+FROM alpine:3.8
 
 # set version for Dockerrize
 ENV DOCKERIZE_VERSION v0.6.1
