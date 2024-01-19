@@ -2,10 +2,6 @@ name: Build and Push
 on:
   push:
 
-env:
-  NODE_VERSION: "20.10.0"
-  ALPINE_VERSION: "3.18"
-
 jobs:
   build:
     name: Build and Push Image
