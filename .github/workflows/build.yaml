@@ -10,10 +10,6 @@ jobs:
   build:
     name: Build and Push Image
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18, 20] # List of Node.js versions to test
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,7 +36,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           build-args: |
-            NODE_VERSION=${{ matrix.node-version }}
+            NODE_VERSION=${{ env.NODE_VERSION }}
             ALPINE_VERSION=${{ env.ALPINE_VERSION }}
           context: .
           push: ${{ github.ref_name == 'main' }}
