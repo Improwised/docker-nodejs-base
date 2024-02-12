@@ -25,8 +25,8 @@ jobs:
         with:
           images: improwised/docker-nodejs-base
           tags: |
-            type=raw,value=${{ matrix.node-version }}-{{branch}}-{{sha}}-{{date 'X'}}
-            type=raw,value=${{ matrix.node-version }}-{{branch}}-latest
+            type=raw,value=${{ matrix.node-version }}-{{sha}}-{{date 'X'}}
+            type=raw,value=${{ matrix.node-version }}-latest
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -48,5 +48,5 @@ jobs:
             ALPINE_VERSION=${{ env.ALPINE_VERSION }}
           context: .
           push: ${{ github.ref_name == 'main' }}
-          tags: ${{ steps.meta.outputs.tag }}
+          tags: ${{ steps.meta.outputs.tags }}
         timeout-minutes: 10
