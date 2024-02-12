@@ -23,7 +23,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_ORGANIZATION }}/${{ vars.DOCKERHUB_IMAGE }}
+          images: improwised/docker-nodejs-base
           tags: |
             type=raw,value=${{ matrix.node-version }}-{{branch}}-{{sha}}-{{date 'X'}}
             type=raw,value=${{ matrix.node-version }}-{{branch}}-latest
@@ -48,5 +48,5 @@ jobs:
             ALPINE_VERSION=${{ env.ALPINE_VERSION }}
           context: .
           push: ${{ github.ref_name == 'main' }}
-          tags: "improwised/docker-nodejs-base:${{ steps.tag.outputs.tag }}"
+          tags: ${{ steps.meta.outputs.tag }}
         timeout-minutes: 10
