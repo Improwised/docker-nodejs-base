@@ -3,7 +3,6 @@ on:
   push:
 
 env:
-  NODE_VERSION: "20.10.0"
   ALPINE_VERSION: "3.18"
 
 jobs:
@@ -19,13 +18,18 @@ jobs:
         uses: actions/checkout@v4
         timeout-minutes: 5
 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: improwised/docker-nodejs-base
+          tags: |
+            type=raw,value=${{ matrix.node-version }}-{{sha}}-{{date 'X'}}
+            type=raw,value=${{ matrix.node-version }}-latest
+        timeout-minutes: 2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-        timeout-minutes: 5
-
-      - name: Create Tag
-        id: tag
-        run: echo "tag=${{ matrix.node-version }}-$(git rev-parse --short HEAD)-$(date +%s)" >> $GITHUB_OUTPUT
         timeout-minutes: 5
 
       - name: Login to Docker Hub
@@ -44,5 +48,5 @@ jobs:
             ALPINE_VERSION=${{ env.ALPINE_VERSION }}
           context: .
           push: ${{ github.ref_name == 'main' }}
-          tags: "improwised/docker-nodejs-base:${{ steps.tag.outputs.tag }}"
+          tags: ${{ steps.meta.outputs.tags }}
         timeout-minutes: 10
