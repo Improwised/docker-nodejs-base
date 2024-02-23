@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18, 20] # List of Node.js versions to test
+        node-version: [18, 19, 20] # List of Node.js versions to test
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
