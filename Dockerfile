@@ -9,7 +9,7 @@ FROM alpine:${ALPINE_VERSION}
 ENV DOCKERIZE_VERSION v0.6.1
 
 # set version for s6 overlay
-ARG S6_OVERLAY_VERSION="3.1.5.0"
+ARG S6_OVERLAY_VERSION="3.2.0.0"
 ARG S6_OVERLAY_ARCH="x86_64"
 
 # add Dockerize
