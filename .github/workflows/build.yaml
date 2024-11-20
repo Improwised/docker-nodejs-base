@@ -37,10 +37,7 @@ jobs:
           images: improwised/docker-nodejs-base
           tags: |
             type=raw,value=${{ matrix.node-version }}-latest
-            type=raw,value=${{ matrix.node-version }}-${{ github.sha }}
-          labels: |
-            version=${{ matrix.node-version }}
-            built-on=${{ runner.os }}
+            type=raw,value=${{ matrix.node-version }}-{{sha}}-{{date 'X'}}
         timeout-minutes: 2
 
       - name: Setup Buildx
