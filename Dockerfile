@@ -7,7 +7,7 @@ FROM node:${NODE_VERSION}-alpine AS node
 FROM alpine:${ALPINE_VERSION}
 
 # Set version variables
-ENV DOCKERIZE_VERSION="v0.8.0"
+ARG DOCKERIZE_VERSION="v0.8.0"
 ARG S6_OVERLAY_VERSION="3.2.0.2"
 ARG S6_OVERLAY_ARCH="x86_64"
 
@@ -25,9 +25,9 @@ RUN apk add --no-cache \
     shadow && \
     apk add --no-cache --virtual=build-dependencies tar && \
     # Add Dockerize
-    wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
-    tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
-    rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
+    wget -q https://github.com/jwilder/dockerize/releases/download/${DOCKERIZE_VERSION}/dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz && \
+    tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz && \
+    rm dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz && \
     # Create necessary directories for Nginx
     mkdir -p /etc/nginx && \
     touch /var/log/nginx/error.log && \
@@ -53,4 +53,3 @@ WORKDIR /app
 
 # Copy additional resources
 ADD rootfs /
-
