@@ -1,0 +1,14 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+
+# GitHub files
+.github/
+
+# Documentation and License
+*.md
+LICENSE
