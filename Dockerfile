@@ -7,8 +7,8 @@ FROM node:${NODE_VERSION}-alpine AS node
 FROM alpine:${ALPINE_VERSION}
 
 # Set version variables
-ENV DOCKERIZE_VERSION="v0.6.1"
-ARG S6_OVERLAY_VERSION="3.2.0.0"
+ENV DOCKERIZE_VERSION="v0.8.0"
+ARG S6_OVERLAY_VERSION="3.2.0.2"
 ARG S6_OVERLAY_ARCH="x86_64"
 
 # Install dependencies and tools
