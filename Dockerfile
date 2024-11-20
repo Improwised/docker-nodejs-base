@@ -51,5 +51,5 @@ RUN wget -qO- https://github.com/just-containers/s6-overlay/releases/download/v$
 # Set working directory
 WORKDIR /app
 
-# Copy additional resources
+# Copy s6-overlay files 
 ADD rootfs /
