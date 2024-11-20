@@ -1,52 +1,78 @@
 name: Build and Push
 on:
   push:
+    branches:
+      - "main"
+    paths:
+      - "Dockerfile"
+      - ".github/workflows/build.yaml"
+      - "!**.md"
+  pull_request:
+    branches:
+      - "main"
 
 env:
   ALPINE_VERSION: "3.18"
 
 jobs:
-  build:
-    name: Build and Push Image
+  docker-build:
+    name: Docker Build
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [ 14.19.1,18, 19, 20,20.13.1,20.17.0,22.11.0] # List of Node.js versions to test
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        timeout-minutes: 5
+        node-version: [14.19.1, 18, 19, 20, 20.13.1, 20.17.0, 22.11.0] # Node.js versions
 
-      - name: Docker meta
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+        timeout-minutes: 3
+
+      - name: Docker Metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: improwised/docker-nodejs-base
           tags: |
-            type=raw,value=${{ matrix.node-version }}-{{sha}}-{{date 'X'}}
             type=raw,value=${{ matrix.node-version }}-latest
+            type=raw,value=${{ matrix.node-version }}-${{ github.sha }}
+          labels: |
+            version=${{ matrix.node-version }}
+            built-on=${{ runner.os }}
         timeout-minutes: 2
 
-      - name: Set up Docker Buildx
+      - name: Setup Buildx
         uses: docker/setup-buildx-action@v3
-        timeout-minutes: 5
+        timeout-minutes: 3
 
-      - name: Login to Docker Hub
+      - name: Docker Login
         if: ${{ github.ref_name == 'main' }}
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-        timeout-minutes: 5
+        timeout-minutes: 2
 
-      - name: Build and Push Docker Image
+      - name: PR Tags
+        id: fallback-tags
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          echo "tags=test-${{ matrix.node-version }}-${{ github.sha }}" >> $GITHUB_ENV
+        timeout-minutes: 1
+
+      - name: Build & Push
         uses: docker/build-push-action@v6
         with:
+          context: .
           build-args: |
             NODE_VERSION=${{ matrix.node-version }}
             ALPINE_VERSION=${{ env.ALPINE_VERSION }}
-          context: .
-          push: ${{ github.ref_name == 'main' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          push: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+          tags: ${{ github.event_name == 'pull_request' && env.tags || steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
         timeout-minutes: 10
