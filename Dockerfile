@@ -2,11 +2,11 @@
 ARG NODE_VERSION
 ARG ALPINE_VERSION
 
-FROM node:${NODE_VERSION}-alpine AS node
-FROM alpine:${ALPINE_VERSION}
+FROM node:${NODE_VERSION:-current}-alpine AS node
+FROM alpine:${ALPINE_VERSION:-latest}
 
 # set version for Dockerrize
-ENV DOCKERIZE_VERSION v0.6.1
+ENV DOCKERIZE_VERSION="v0.6.1"
 
 # set version for s6 overlay
 ARG S6_OVERLAY_VERSION="3.2.0.0"
