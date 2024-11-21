@@ -1,3 +1,5 @@
 #!/usr/bin/with-contenv bash
 
+set -e
+
 dockerize -stdout /var/log/nginx/error.log -poll
