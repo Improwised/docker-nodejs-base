@@ -1,9 +1,10 @@
-# Use default version for Node.js
+# Use default versions for Node.js and Alpine Linux
 ARG NODE_VERSION=current
+ARG ALPINE_VERSION=latest
 
 # Base images
 FROM node:${NODE_VERSION}-alpine AS node
-FROM alpine:3.21.2
+FROM alpine:${ALPINE_VERSION}
 
 # Set version variables
 ARG DOCKERIZE_VERSION="v0.8.0"
