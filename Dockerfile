@@ -3,7 +3,7 @@ ARG NODE_VERSION=current
 ARG ALPINE_VERSION=latest
 
 # Base images
-FROM node:${NODE_VERSION}-alpine AS node
+FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node
 FROM alpine:${ALPINE_VERSION}
 
 # Set version variables
@@ -51,5 +51,5 @@ RUN wget -qO- https://github.com/just-containers/s6-overlay/releases/download/v$
 # Set working directory
 WORKDIR /app
 
-# Copy s6-overlay files 
+# Copy s6-overlay files
 ADD rootfs /
