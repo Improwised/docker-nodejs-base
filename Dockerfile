@@ -4,7 +4,7 @@ ARG ALPINE_VERSION=latest
 
 # Base images
 FROM node:${NODE_VERSION}-alpine AS node
-FROM alpine:3.20
+FROM alpine:${ALPINE_VERSION}
 
 # Set version variables
 ARG DOCKERIZE_VERSION="v0.8.0"

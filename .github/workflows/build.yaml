@@ -11,6 +11,9 @@ on:
     branches:
       - "main"
 
+env:
+  ALPINE_VERSION: "3.20"
+
 jobs:
   docker-build:
     name: Docker Build
