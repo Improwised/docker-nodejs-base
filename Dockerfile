@@ -1,4 +1,4 @@
-# Use default versions for Node.js and Alpine Linux
+# Use default version for Node.js
 ARG NODE_VERSION=current
 
 # Base images
