@@ -8,7 +8,7 @@ FROM alpine:${ALPINE_VERSION}
 
 # Set version variables
 ARG DOCKERIZE_VERSION="v0.8.0"
-ARG S6_OVERLAY_VERSION="3.2.0.2"
+ARG S6_OVERLAY_VERSION="v3.2.0.2"
 ARG S6_OVERLAY_ARCH="x86_64"
 
 # Install dependencies and tools
@@ -43,13 +43,13 @@ COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
 
 # Add S6 Overlay
-RUN wget -qO- https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz | tar -C / -Jx && \
-    wget -qO- https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${S6_OVERLAY_ARCH}.tar.xz | tar -C / -Jx && \
-    wget -qO- https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-noarch.tar.xz | tar -C / -Jx && \
-    wget -qO- https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz | tar -C / -Jx
+RUN wget -qO- https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz | tar -C / -Jx && \
+    wget -qO- https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-${S6_OVERLAY_ARCH}.tar.xz | tar -C / -Jx && \
+    wget -qO- https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-symlinks-noarch.tar.xz | tar -C / -Jx && \
+    wget -qO- https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz | tar -C / -Jx
 
 # Set working directory
 WORKDIR /app
 
-# Copy s6-overlay files 
+# Copy s6-overlay files
 ADD rootfs /

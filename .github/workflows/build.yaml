@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.19.1, 18, 19, 20, 20.13.1, 20.17.0, 22.11.0] # Node.js versions
+        node-version: [14.19.1, 18, 19, 20, 20.13.1, 20.17.0, 22.11.0, 23.4.0] # Node.js versions
 
     steps:
       - name: Checkout Code
