@@ -12,7 +12,7 @@ on:
       - "main"
 
 env:
-  ALPINE_VERSION: "3.20"
+  ALPINE_VERSION: "3.22"
 
 jobs:
   docker-build:
@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.19.1, 18, 19, 20, 20.13.1, 20.17.0, 22.11.0, 23.4.0] # Node.js versions
+        node-version: [20.19.5, 22.21.1, 24.11.0, 25.1.0] # Node.js versions
 
     steps:
       - name: Checkout Code
