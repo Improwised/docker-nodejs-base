@@ -3,12 +3,11 @@ ARG NODE_VERSION=current
 ARG ALPINE_VERSION=latest
 
 # Base images
-FROM node:${NODE_VERSION}-alpine AS node
-FROM alpine:${ALPINE_VERSION}
+FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node
 
 # Set version variables
-ARG DOCKERIZE_VERSION="v0.8.0"
-ARG S6_OVERLAY_VERSION="v3.2.0.2"
+ARG DOCKERIZE_VERSION="v0.9.6"
+ARG S6_OVERLAY_VERSION="v3.2.1.0"
 ARG S6_OVERLAY_ARCH="x86_64"
 
 # Install dependencies and tools
@@ -35,12 +34,6 @@ RUN apk add --no-cache \
     # Cleanup
     apk del --purge build-dependencies && \
     rm -rf /tmp/*
-
-# Add Node.js libraries from the Node image
-COPY --from=node /usr/lib /usr/lib
-COPY --from=node /usr/local/lib /usr/local/lib
-COPY --from=node /usr/local/include /usr/local/include
-COPY --from=node /usr/local/bin /usr/local/bin
 
 # Add S6 Overlay
 RUN wget -qO- https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz | tar -C / -Jx && \
