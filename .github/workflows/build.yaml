@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.19.5, 22.21.1, 24.11.0, 25.1.0] # Node.js versions
+        node-version: [20.19.6, 22.21.1, 24.12.0, 25.2.1] # Node.js versions
 
     steps:
       - name: Checkout Code
