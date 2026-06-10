@@ -41,7 +41,7 @@ jobs:
         timeout-minutes: 2
 
       - name: Setup Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
         timeout-minutes: 3
 
       - name: Docker Login
