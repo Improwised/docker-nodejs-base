@@ -63,6 +63,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
+          no-cache: true
           build-args: |
             NODE_VERSION=${{ matrix.node-version }}
             ALPINE_VERSION=${{ env.ALPINE_VERSION }}
