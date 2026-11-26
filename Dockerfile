@@ -9,6 +9,7 @@ FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node
 ARG DOCKERIZE_VERSION="v0.9.6"
 ARG S6_OVERLAY_VERSION="v3.2.1.0"
 ARG S6_OVERLAY_ARCH="x86_64"
+ARG ALPINE_VERSION
 
 # Install dependencies and tools
 RUN apk add --no-cache \
