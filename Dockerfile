@@ -17,18 +17,21 @@ RUN apk add --no-cache \
     make \
     gcc \
     g++ \
-    nginx \
     ca-certificates \
     coreutils \
     tzdata \
     shadow && \
+    # Install nginx from nginx.org mainline repo (>= 1.31.9, patched for nginx2root CVEs)
+    curl -o /etc/apk/keys/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub && \
+    echo "https://nginx.org/packages/mainline/alpine/v${ALPINE_VERSION}/main" >> /etc/apk/repositories && \
+    apk add --no-cache nginx && \
     apk add --no-cache --virtual=build-dependencies tar && \
     # Add Dockerize
     wget -q https://github.com/jwilder/dockerize/releases/download/${DOCKERIZE_VERSION}/dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz && \
     tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz && \
     rm dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz && \
     # Create necessary directories for Nginx
-    mkdir -p /etc/nginx && \
+    mkdir -p /etc/nginx /var/log/nginx && \
     touch /var/log/nginx/error.log && \
     rm -Rf /etc/nginx/nginx.conf && \
     # Cleanup
